@@ -1,10 +1,6 @@
 package day1;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -17,24 +13,9 @@ public class GetIncreaseDecreaseCounts {
 		file = new File(fileName.getPath());
 	}
 
-	public ArrayList<Integer> convertFileToArray(File file) {
-		ArrayList<Integer> array = new ArrayList<Integer>();
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		    	array.add(Integer.valueOf(line));
-		    }
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return array;
-	}
-
 	public DepthCounts calculateDepthCounts(int scansToSumTogether) {
 		DepthCounts depthCounts = new DepthCounts();
-		ArrayList<Integer> inputs = convertFileToArray(file);
+		ArrayList<Integer> inputs = FileUtility.convertFileToIntArray(file);
 		int prior = 0;
 		for(int scanNum=0; scanNum<scansToSumTogether; scanNum++) {				
 			prior += inputs.get(scanNum);
