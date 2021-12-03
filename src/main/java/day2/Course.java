@@ -23,13 +23,14 @@ public class Course {
 			int magnitude = Integer.valueOf(input.substring(input.indexOf(" ") + 1));
 			switch (direction) {
 			case "up":
-				positionPlot.addDepth(magnitude * -1);
+				positionPlot.addAim(magnitude * -1);
 				break;
 			case "down":
-				positionPlot.addDepth(magnitude);
+				positionPlot.addAim(magnitude);
 				break;
 			case "forward":
 				positionPlot.addHorizontal(magnitude);
+				positionPlot.addDepth(magnitude* positionPlot.getAim());
 				break;
 			default:
 				throw new RuntimeException("Invalid direction: " + direction);
