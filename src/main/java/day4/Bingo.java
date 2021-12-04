@@ -12,7 +12,6 @@ public class Bingo {
 	public ArrayList<Board> boards;
 	public ArrayList<Integer> ballCalls;
 	public static int curBallCallIndex = 0;
-	public boolean isWinner = false;
 	public int indexOfLastWinningBoard = -1;
 	
 	public Bingo() {
@@ -69,15 +68,15 @@ public class Bingo {
 
 	public void callABall() {
 		int curBallNumber = ballCalls.get(curBallCallIndex++);
-		int latestWinningBoardNum = 0;
+		int boardIndex = 0;
 		for (Board board : boards) {
 			board.markNumberAsCalled(curBallNumber);
-			isWinner = board.isAWinner(curBallNumber);
-			if(isWinner) {
-				indexOfLastWinningBoard = latestWinningBoardNum;
-			} else {
-				latestWinningBoardNum++;
+			if(board.numWonOn==-1) {
+				if(board.isAWinner(curBallNumber)) {
+					indexOfLastWinningBoard = boardIndex;
+				}
 			}
+			boardIndex++;
 		}
 	}
 	

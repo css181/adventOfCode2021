@@ -13,7 +13,7 @@ public class BingoPart1Test {
 	void do_all_balls_until_someone_wins_test() throws Exception {
 		do {
 			bingo.callABall();
-		}while(!bingo.isWinner && Bingo.curBallCallIndex<90);
+		}while(bingo.getBoardIndexesThatHaveNotWonYet().size()>=bingo.boards.size() && Bingo.curBallCallIndex<90);
 		System.out.println("Needed to call [" + (Bingo.curBallCallIndex) + "] balls.");
 		System.out.println("Total of all UNcalled on board 49: " + bingo.boards.get(49).getSumOfAll_UNCalledNumbers());
 		bingo.printAllBoards();
