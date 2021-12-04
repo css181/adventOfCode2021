@@ -14,13 +14,6 @@ public class PowerPart1Test {
 	PowerCalculation powerCalculation = new PowerCalculation();
 	
 	@Test
-	void new_rates_starts_at_0_0() throws Exception {
-		Rates rates = new Rates();
-		assertEquals(0, rates.getGamma());
-		assertEquals(0, rates.getEpsilon());
-	}
-	
-	@Test
 	void whichHasMore_will_be_1_when_more_1s() throws Exception {
 		ArrayList<String> bytes = new ArrayList<String>();
 		bytes.add("1");
@@ -113,7 +106,7 @@ public class PowerPart1Test {
 		gammaBytes.add(gammaByte2);
 		gammaBytes.add(gammaByte1);
 		gammaBytes.add(gammaByte0);
-		long gammaDecimal = getDecimal(gammaBytes);
+		long gammaDecimal = DecimalUtil.getDecimal(gammaBytes);
 		System.out.println("GAMMA");
 		System.out.println(gammaBytes);
 		
@@ -142,7 +135,7 @@ public class PowerPart1Test {
 		epsilonBytes.add(epsilon2);
 		epsilonBytes.add(epsilon1);
 		epsilonBytes.add(epsilon0);
-		long epsilonDecimal = getDecimal(epsilonBytes);
+		long epsilonDecimal = DecimalUtil.getDecimal(epsilonBytes);
 		System.out.println("EPSILON");
 		System.out.println(epsilonBytes);
 		System.out.println("\n");
@@ -154,37 +147,28 @@ public class PowerPart1Test {
 		assertEquals(2587, epsilonDecimal);
 	}
 	
-	private long getDecimal(ArrayList<Integer> bytes) {
-		long total = 0;
-		for (int i=0; i<bytes.size(); i++) {
-			long thisByte = (long) Math.pow(2, i);
-			total+=thisByte*bytes.get(i);
-		}
-		return total;
-	}
-	
 	@Test
 	void getDecimalTest() throws Exception {
 		ArrayList<Integer> bytes = new ArrayList<Integer>();
 		bytes.add(1);
-		assertEquals(1, getDecimal(bytes));
+		assertEquals(1, DecimalUtil.getDecimal(bytes));
 		bytes.add(1);
-		assertEquals(3, getDecimal(bytes));
+		assertEquals(3, DecimalUtil.getDecimal(bytes));
 		bytes.add(1);
-		assertEquals(7, getDecimal(bytes));
+		assertEquals(7, DecimalUtil.getDecimal(bytes));
 		bytes.add(1);
-		assertEquals(15, getDecimal(bytes));
+		assertEquals(15, DecimalUtil.getDecimal(bytes));
 	}
 	@Test
 	void getDecimalTest2() throws Exception {
 		ArrayList<Integer> bytes = new ArrayList<Integer>();
 		bytes.add(0);
-		assertEquals(0, getDecimal(bytes));
+		assertEquals(0, DecimalUtil.getDecimal(bytes));
 		bytes.add(1);
-		assertEquals(2, getDecimal(bytes));
+		assertEquals(2, DecimalUtil.getDecimal(bytes));
 		bytes.add(0);
-		assertEquals(2, getDecimal(bytes));
+		assertEquals(2, DecimalUtil.getDecimal(bytes));
 		bytes.add(1);
-		assertEquals(10, getDecimal(bytes));
+		assertEquals(10, DecimalUtil.getDecimal(bytes));
 	}
 }

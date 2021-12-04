@@ -36,10 +36,9 @@ public class PowerCalculation {
 				throw new RuntimeException("Invalid binary bit: " + bite);
 			}
 		}
-		
+		if(oneTotal==zeroTotal) {return 1;}
 		if(oneTotal>zeroTotal) {return 1;} else {return 0;}
 	}
-
 
 	public ArrayList<String> getAllInputs() {
 		ArrayList<String> inputs = FileUtility.convertFileToStringArray(file);
@@ -53,6 +52,17 @@ public class PowerCalculation {
 			binaryList.add(String.valueOf(input.charAt(byteIndex)));
 		}
 		return binaryList;
+	}
+
+
+	public ArrayList<String> getInputsThatHaveKeyValueForByte(String key, int byteIndex, ArrayList<String> inputs) {
+		ArrayList<String> results = new ArrayList<String>();
+		for (String input : inputs) {
+			if(String.valueOf(input.charAt(byteIndex)).equals(key)) {
+				results.add(input);
+			}
+		}
+		return results;
 	}
 
 }
