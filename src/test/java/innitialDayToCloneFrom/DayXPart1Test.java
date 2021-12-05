@@ -7,9 +7,9 @@ import java.net.URL;
 import org.junit.jupiter.api.Test;
 
 
-public class Day5Part1Test {
+public class DayXPart1Test {
 
-	Day5 day5 = new Day5();
+	DayX dayX = new DayX();
 	
 	@Test
 	void pojo_test() throws Exception {
@@ -20,7 +20,7 @@ public class Day5Part1Test {
 	@Test
 	void use_different_input_test() throws Exception {
 		URL fileName = getClass().getResource("SampleInput.txt");
-		day5.setFileToUse(new File(fileName.getPath()));
+		dayX.setFileToUse(new File(fileName.getPath()));
 	}
 	
 }

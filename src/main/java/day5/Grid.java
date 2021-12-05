@@ -19,7 +19,6 @@ public class Grid {
 		}
 	}
 	
-	//Assumption, line must be straight down either the x or y axis
 	public void addLine(Line line) {
 		int x1 = line.getStart().getX();
 		int x2 = line.getEnd().getX();

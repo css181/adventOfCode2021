@@ -6,17 +6,19 @@ import java.util.ArrayList;
 
 import day1.FileUtility;
 
-public class Day5 {
+public class DayX {
 
 	private static File file;
 	
-	public Day5() {
+	public DayX() {
 		URL fileName = getClass().getResource("Input.txt");
 		file = new File(fileName.getPath());
+		
+		ArrayList<String> inputs = FileUtility.convertFileToStringArray(file);
 	}
 	
 	protected void setFileToUse(File file) {
-		Day5.file = file;
+		DayX.file = file;
 	}
 
 
