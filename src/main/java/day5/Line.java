@@ -40,4 +40,11 @@ public class Line {
         
         return true;
     }
+    
+	@Override
+    public String toString() {
+		String print = "(" + start.getX() + "," + start.getY() +
+				")->(" + end.getX() + "," + end.getY() + ")";
+		return print;
+    }
 }

@@ -124,13 +124,84 @@ public class Day5Part1Test {
 		assertEquals(expected, actual);
 	}
 	
-	@Test
+//	@Test
 	void do_full_input() throws Exception {
 		day5 = new Day5();
 		ArrayList<Line> allLines = day5.readInLines();
 		ArrayList<Line> filteredLines = day5.filterForSameXorY(allLines);
 		
 		day5.addLinesToGrid(filteredLines);
+		int actual = day5.getGrid().findAllInstancesAbove(2);
+		System.out.println("Number of 2's or greater: " + actual);
+	}
+	
+	//******************************* PART 2 **********************//
+	@Test
+	void can_recognize_diagonal_line() throws Exception {
+		URL fileName = getClass().getResource("testInput.txt");
+		day5.setFileToUse(new File(fileName.getPath()));
+		ArrayList<Line> expected = new ArrayList<Line>();
+		Line line = new Line(new Coordinate(8,0), new Coordinate(0,8));
+		expected.add(line);
+		line = new Line(new Coordinate(6,4), new Coordinate(2,0));
+		expected.add(line);
+		line = new Line(new Coordinate(0,0), new Coordinate(8,8));
+		expected.add(line);
+		line = new Line(new Coordinate(5,5), new Coordinate(8,2));
+		expected.add(line);
+		
+		ArrayList<Line> allInputs = day5.readInLines();
+		ArrayList<Line> actual = day5.filterOnlyDiagonalLines(allInputs);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void addLines_including_diagonal_to_Grid() throws Exception {
+		URL fileName = getClass().getResource("testInput.txt");
+		day5.setFileToUse(new File(fileName.getPath()));
+		day5.setGrid(10);
+		ArrayList<Line> allLines = day5.readInLines();
+		ArrayList<Line> filteredLines = day5.filterForSameXorY(allLines);
+		day5.addLinesToGrid(filteredLines);
+		String firstExpected = 
+				  ". . . . . . . 1 . . \n"
+				+ ". . 1 . . . . 1 . . \n"
+				+ ". . 1 . . . . 1 . . \n"
+				+ ". . . . . . . 1 . . \n"
+				+ ". 1 1 2 1 1 1 2 1 1 \n"
+				+ ". . . . . . . . . . \n"
+				+ ". . . . . . . . . . \n"
+				+ ". . . . . . . . . . \n"
+				+ ". . . . . . . . . . \n"
+				+ "2 2 2 1 1 1 . . . . \n";
+		assertEquals(firstExpected, day5.getGrid().toString());
+		
+		
+		String expected = 
+				  "1 . 1 . . . . 1 1 . \n"
+				+ ". 1 1 1 . . . 2 . . \n"
+				+ ". . 2 . 1 . 1 1 1 . \n"
+				+ ". . . 1 . 2 . 2 . . \n"
+				+ ". 1 1 2 3 1 3 2 1 1 \n"
+				+ ". . . 1 . 2 . . . . \n"
+				+ ". . 1 . . . 1 . . . \n"
+				+ ". 1 . . . . . 1 . . \n"
+				+ "1 . . . . . . . 1 . \n"
+				+ "2 2 2 1 1 1 . . . . \n";
+		ArrayList<Line> diagonalLines = day5.filterOnlyDiagonalLines(allLines);
+		day5.addLinesToGrid(diagonalLines);
+		
+		assertEquals(expected, day5.getGrid().toString());
+	}
+	
+	@Test
+	void do_full_input_with_diagonal() throws Exception {
+		day5 = new Day5();
+		ArrayList<Line> allLines = day5.readInLines();
+		ArrayList<Line> filteredLines = day5.filterForSameXorY(allLines);
+		day5.addLinesToGrid(filteredLines);
+		ArrayList<Line> diagonalLines = day5.filterOnlyDiagonalLines(allLines);
+		day5.addLinesToGrid(diagonalLines);
 		int actual = day5.getGrid().findAllInstancesAbove(2);
 		System.out.println("Number of 2's or greater: " + actual);
 	}

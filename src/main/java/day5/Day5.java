@@ -55,6 +55,34 @@ public class Day5 {
 		}
 		return filteredLines;
 	}
+	public ArrayList<Line> filterOnlyDiagonalLines(ArrayList<Line> allLines) {
+		ArrayList<Line> filteredLines = new ArrayList<Line>();
+		int x1, x2, y1, y2;
+		for (Line line : allLines) {
+			x1 = line.getStart().getX();
+			y1 = line.getStart().getY();
+			x2 = line.getEnd().getX();
+			y2 = line.getEnd().getY();
+			if(isLineDiagonal(x1, x2, y1, y2)) {
+				filteredLines.add(line);
+			}
+		}
+		return filteredLines;
+	}
+
+	public static boolean isLineDiagonal(int x1, int x2, int y1, int y2) {
+		boolean answer = false;
+		if((x1 - x2) == (y1 - y2)) {
+			answer = true;
+		} else if((x1 - x2) == (y2 - y1)) {
+			answer = true;
+		} else if((x2 - x1) == (y1 - y2)) {
+			answer = true;
+		} else if((x2 - x1) == (y2 - y1)) {
+			answer = true;
+		}
+		return answer;
+	}
 
 	public Grid getGrid() {
 		return grid;
@@ -65,11 +93,13 @@ public class Day5 {
 
 	public void addLinesToGrid(ArrayList<Line> filteredLines) {
 		int curLine = 0;
+		System.out.println("Adding [" + filteredLines.size() + "] lines");
 		for (Line line : filteredLines) {
-			System.out.println("Adding Line: " + curLine++);
+			System.out.println("Adding Line: " + line + " #" + ++curLine);
 			grid.addLine(line);
 		}
 	}
+
 
 	
 }
