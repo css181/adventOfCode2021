@@ -9,7 +9,7 @@ import day1.FileUtility;
 public class Day6 {
 
 	private static File file;
-	ArrayList<ArrayList<Integer>> fishList;
+	ArrayList<Integer> fishList;
 	int dayCount = 0;
 	
 	public Day6() {
@@ -23,11 +23,28 @@ public class Day6 {
 		ArrayList<String> inputs = FileUtility.convertFileToStringArray(file);
 		//This input only has 1 element that's a comma delimited list
 		String[] fishStrings = inputs.get(0).split(",");
-		fishList = new ArrayList<ArrayList<Integer>>();
-		fishList.add(new ArrayList<Integer>());
+		fishList = new ArrayList<Integer>();
 		for (String fishString : fishStrings) {
-			fishList.get(0).add(Integer.valueOf(fishString));
+			fishList.add(Integer.valueOf(fishString));
 		}
+	}
+	
+	public void processDay() {
+		int numOfFishToAdd = 0;
+		for(int counter=0; counter<fishList.size(); counter++) {
+			int curFishValue = fishList.get(counter);
+			if(curFishValue==0) {
+				fishList.set(counter, 6);
+				numOfFishToAdd++;
+			} else {
+				fishList.set(counter, curFishValue -1);
+			}
+		}
+		for(int add=0; add<numOfFishToAdd; add++) {
+			fishList.add(8);
+		}
+		System.out.println("After Processing Day: " + dayCount++);
+		System.out.println(fishList);
 	}
 	
 	protected void setFileToUse(File file) {
@@ -35,58 +52,24 @@ public class Day6 {
 	}
 
 
-	public ArrayList<Integer> getSimpleFishList() {
-		return fishList.get(0);
-	}
-	public ArrayList<ArrayList<Integer>> getFullFishList() {
+	public ArrayList<Integer> getFishList() {
 		return fishList;
 	}
 
-	public void processDay() {
-		int numOfFishToAdd = 0;
-		for(int outerCounter=0; outerCounter<fishList.size(); outerCounter++) {
-			for(int counter=0; counter<fishList.get(outerCounter).size(); counter++) {
-				int curFishValue = fishList.get(outerCounter).get(counter);
-				if(curFishValue==0) {
-					fishList.get(outerCounter).set(counter, 6);
-					numOfFishToAdd++;
-				} else {
-					fishList.get(outerCounter).set(counter, curFishValue -1);
-				}
-			}
-		}
-		
-		//Now add fish where they need to go
-		for(int add=0; add<numOfFishToAdd; add++) {
-			int outerCounter=0;
-			if(fishList.get(outerCounter).size()<10000) {
-				fishList.get(outerCounter).add(8);					
-			} else {
-				boolean fishNeedsToBeAdded = true;
-				do {				
-					if(outerCounter==fishList.size()-1) {
-						outerCounter++;
-						fishList.add(new ArrayList<Integer>());
-						fishList.get(outerCounter).add(8);
-						fishNeedsToBeAdded = false;
-					} else {
-						outerCounter++;
-						if(fishList.get(outerCounter).size()<10000) {
-							fishList.get(outerCounter).add(8);
-							fishNeedsToBeAdded = false;
-						}
-					}
-				}while(fishNeedsToBeAdded);
-			}
-		}
-		System.out.println("After Processing Day: " + dayCount++);
-	}
-	
 	public long getTotalFishCount() {
+		return fishList.size();
+	}
+
+	public long getNumberOfReproductionsForStartOverXDays(int fishValue, int days) {
 		long total = 0;
-		for(int outerCounter=0; outerCounter<fishList.size(); outerCounter++) {
-			total+=fishList.get(outerCounter).size();
+		for(int curDay=1; curDay<=days; curDay++) {
+			fishValue--;
+			if(fishValue<0) {
+				total=total+1+getNumberOfReproductionsForStartOverXDays(8, days-curDay);
+				fishValue=6;
+			}
 		}
 		return total;
 	}
+	
 }
