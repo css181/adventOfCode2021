@@ -181,35 +181,18 @@ public class Day6Part1Test {
 	void part2_answer() throws Exception {
 		day6 = new Day6();
 		day6.populateFishArray();
-		ArrayList<Integer> fishList = day6.getFishList();
-		long total = 0;
-		for (Integer fish : fishList) {
-			switch (fish) {
-			case 0:
-				total+=6703087163l+1;
-				break;
-			case 1:
-				total+=6206821032l+1;
-				break;
-			case 2:
-				total+=5617089147l+1;
-				break;
-			case 3:
-				total+=5217223241l+1;
-				break;
-			case 4:
-				total+=4726100873l+1;
-				break;
-			case 5:
-				total+=4368232008l+1;
-				break;
-			case 6:
-				total+=3989468461l+1;
-				break;
-			default:
-				break;
-			}
+		long expected = 1710166656900l;
+		assertEquals(expected, day6.getTotalNumAfter256Days());
+	}
+	
+	@Test
+	void part2_performant() throws Exception {
+		Day6Performant day6 = new Day6Performant();
+		day6.populateFishArray();
+		long expected = 1710166656900l;
+		for(int x=0; x<256; x++) {
+			day6.processDay();
 		}
-		System.out.println("After 250 days total fish: " + total);
+		assertEquals(expected, day6.getTotalFishCount());
 	}
 }
