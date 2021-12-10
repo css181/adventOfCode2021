@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class FileUtility {
 
-	public static ArrayList<Integer> convertFileToIntArray(File file) {
+	public static ArrayList<Integer> convertFileToIntList(File file) {
 		ArrayList<Integer> array = new ArrayList<Integer>();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    String line;
@@ -37,6 +37,26 @@ public class FileUtility {
 			e.printStackTrace();
 		}
 		return array;
+	}
+	
+	public static ArrayList<ArrayList<Integer>> convertFileToIntListOfLists(File file) {
+		ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> curList;
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		    	curList = new ArrayList<Integer>();
+				for(int x=0; x<line.length(); x++) {
+					curList.add(Integer.valueOf(String.valueOf(line.charAt(x))));
+				}
+				listOfLists.add(curList);
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return listOfLists;
 	}
 
 }

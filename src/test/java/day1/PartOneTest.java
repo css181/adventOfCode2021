@@ -22,7 +22,7 @@ class PartOneTest {
 		expected.add(4582);
 		expected.add(4582);
 		URL fileName = getClass().getResource("SingleSame.txt");
-		ArrayList<Integer> actual = FileUtility.convertFileToIntArray(new File(fileName.getPath()));
+		ArrayList<Integer> actual = FileUtility.convertFileToIntList(new File(fileName.getPath()));
 		assertEquals(expected, actual);
 	}
 

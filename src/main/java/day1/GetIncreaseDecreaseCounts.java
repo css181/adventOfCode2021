@@ -15,7 +15,7 @@ public class GetIncreaseDecreaseCounts {
 
 	public DepthCounts calculateDepthCounts(int scansToSumTogether) {
 		DepthCounts depthCounts = new DepthCounts();
-		ArrayList<Integer> inputs = FileUtility.convertFileToIntArray(file);
+		ArrayList<Integer> inputs = FileUtility.convertFileToIntList(file);
 		int prior = 0;
 		for(int scanNum=0; scanNum<scansToSumTogether; scanNum++) {				
 			prior += inputs.get(scanNum);
