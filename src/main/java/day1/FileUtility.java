@@ -39,6 +39,26 @@ public class FileUtility {
 		return array;
 	}
 	
+	//Used for putting into Array of Array of single character strings
+	public static ArrayList<ArrayList<String>> convertFileToStringArrayOfArrays(File file) {
+		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+				ArrayList<String> curLine = new ArrayList<String>();
+				for(int pos=0; pos<line.length(); pos++) {
+					curLine.add(String.valueOf(line.charAt(pos)));
+				}
+				list.add(curLine);
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public static ArrayList<ArrayList<Integer>> convertFileToIntListOfLists(File file) {
 		ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> curList;

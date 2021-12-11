@@ -25,16 +25,7 @@ public class Day10 {
 	}
 
 	protected void getInputs() {
-		openCloseInputs = new ArrayList<ArrayList<String>>();
-		ArrayList<String> inputs = FileUtility.convertFileToStringArray(file);
-		ArrayList<String> curLine;
-		for (String inputLine : inputs) {
-			curLine = new ArrayList<String>();
-			for(int pos=0; pos<inputLine.length(); pos++) {
-				curLine.add(String.valueOf(inputLine.charAt(pos)));
-			}
-			openCloseInputs.add(curLine);
-		}
+		openCloseInputs = FileUtility.convertFileToStringArrayOfArrays(file);
 		completionStrings = new ArrayList<ArrayList<String>>();
 	}
 	

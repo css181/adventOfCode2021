@@ -325,6 +325,6 @@ public class Day10Part1Test {
 		
 		System.out.println("The middle completion score is: " + day10.getMiddleCompletionScore());
 		//After knowing add assert.
-		assertEquals(288957, day10.getMiddleCompletionScore());
+		assertEquals(3260812321l, day10.getMiddleCompletionScore());
 	}
 }
