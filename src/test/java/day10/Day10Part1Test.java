@@ -188,12 +188,143 @@ public class Day10Part1Test {
 			day10.setMyStack(new MyStack());
 		}
 		System.out.println("There are [" + day10.getExceptionPops().size() + "] exceptions");
-//		assertEquals(5, day10.getExceptionPops().size());
+		//Add assert after knowing
+		assertEquals(45, day10.getExceptionPops().size());
 		int totalScore = 0;
 		for (String exceptionPop : day10.getExceptionPops()) {
 			totalScore+=day10.getPointsForException(exceptionPop);
 		}
 		System.out.println("Total score is: " + totalScore);
-//		assertEquals(26397, totalScore);
+		//Add assert after knowing
+		assertEquals(240123, totalScore);
+	}
+	
+	//********************** Part 2 ************************
+	@Test
+	void getCompletionStringsForEachNonCorruptedSampleInput() throws Exception {
+		URL fileName = getClass().getResource("SampleInput.txt");
+		day10.setFileToUse(new File(fileName.getPath()));
+		day10.getInputs();
+		for (int inputIndex=0; inputIndex<day10.getOpenCloseInputs().size(); inputIndex++) {
+			ArrayList<String> inputLine = day10.getOpenCloseInputs().get(inputIndex);
+			int curExceptionCount = day10.getExceptionPops().size();
+			int curInputIndex = 0;
+			do {
+				String curInput = inputLine.get(curInputIndex);
+				day10.processInput(curInput);
+				curInputIndex++;
+			}while(day10.getExceptionPops().size()==curExceptionCount && curInputIndex<inputLine.size());
+			if(day10.getExceptionPops().size()!=curExceptionCount) {
+				//corrupted line, ignore
+			} else {
+				//the ACT line in the test is here:
+				day10.addCompletionSequence();
+			}
+			day10.setMyStack(new MyStack());
+		}
+		ArrayList<ArrayList<String>> expected = new ArrayList<ArrayList<String>>();
+		ArrayList<String> expectedCompletion1 = new ArrayList<>(Arrays.asList("}", "}", "]", "]", ")", "}", ")", "]"));
+		ArrayList<String> expectedCompletion2 = new ArrayList<>(Arrays.asList(")", "}", ">", "]", "}", ")"));
+		ArrayList<String> expectedCompletion3 = new ArrayList<>(Arrays.asList("}", "}", ">", "}", ">", ")", ")", ")", ")"));
+		ArrayList<String> expectedCompletion4 = new ArrayList<>(Arrays.asList("]", "]", "}", "}", "]", "}", "]", "}", ">"));
+		ArrayList<String> expectedCompletion5 = new ArrayList<>(Arrays.asList("]", ")", "}", ">"));
+		expected.add(expectedCompletion1);
+		expected.add(expectedCompletion2);
+		expected.add(expectedCompletion3);
+		expected.add(expectedCompletion4);
+		expected.add(expectedCompletion5);
+		
+		assertEquals(expected, day10.getCompletionStrings());
+	}
+	
+	@Test
+	void completionScore_is_5times_each_char_plus_table_for_type_of_char() throws Exception {
+		URL fileName = getClass().getResource("SampleInput.txt");
+		day10.setFileToUse(new File(fileName.getPath()));
+		day10.getInputs();
+		for (int inputIndex=0; inputIndex<day10.getOpenCloseInputs().size(); inputIndex++) {
+			ArrayList<String> inputLine = day10.getOpenCloseInputs().get(inputIndex);
+			int curExceptionCount = day10.getExceptionPops().size();
+			int curInputIndex = 0;
+			do {
+				String curInput = inputLine.get(curInputIndex);
+				day10.processInput(curInput);
+				curInputIndex++;
+			}while(day10.getExceptionPops().size()==curExceptionCount && curInputIndex<inputLine.size());
+			if(day10.getExceptionPops().size()!=curExceptionCount) {
+				//corrupted line, ignore
+			} else {
+				day10.addCompletionSequence();
+			}
+			day10.setMyStack(new MyStack());
+		}
+		
+		assertEquals(288957, day10.calculateCompletionScore(day10.getCompletionStrings().get(0)));
+		assertEquals(5566, day10.calculateCompletionScore(day10.getCompletionStrings().get(1)));
+		assertEquals(1480781, day10.calculateCompletionScore(day10.getCompletionStrings().get(2)));
+		assertEquals(995444, day10.calculateCompletionScore(day10.getCompletionStrings().get(3)));
+		assertEquals(294, day10.calculateCompletionScore(day10.getCompletionStrings().get(4)));
+	}
+	
+	@Test
+	void can_get_the_middle_completionScore() throws Exception {
+		URL fileName = getClass().getResource("SampleInput.txt");
+		day10.setFileToUse(new File(fileName.getPath()));
+		day10.getInputs();
+		for (int inputIndex=0; inputIndex<day10.getOpenCloseInputs().size(); inputIndex++) {
+			ArrayList<String> inputLine = day10.getOpenCloseInputs().get(inputIndex);
+			int curExceptionCount = day10.getExceptionPops().size();
+			int curInputIndex = 0;
+			do {
+				String curInput = inputLine.get(curInputIndex);
+				day10.processInput(curInput);
+				curInputIndex++;
+			}while(day10.getExceptionPops().size()==curExceptionCount && curInputIndex<inputLine.size());
+			if(day10.getExceptionPops().size()!=curExceptionCount) {
+				//corrupted line, ignore
+			} else {
+				day10.addCompletionSequence();
+			}
+			day10.setMyStack(new MyStack());
+		}
+		
+		for (ArrayList<String> completionList : day10.getCompletionStrings()) {
+			day10.calculateCompletionScore(completionList);
+		}
+		
+		assertEquals(288957, day10.getMiddleCompletionScore());
+	}
+	
+	@Test
+	void part2_for_real() throws Exception {
+		day10 = new Day10();
+		day10.getInputs();
+		day10.getInputs();
+		for (int inputIndex=0; inputIndex<day10.getOpenCloseInputs().size(); inputIndex++) {
+			ArrayList<String> inputLine = day10.getOpenCloseInputs().get(inputIndex);
+			int curExceptionCount = day10.getExceptionPops().size();
+			int curInputIndex = 0;
+			do {
+				String curInput = inputLine.get(curInputIndex);
+				day10.processInput(curInput);
+				curInputIndex++;
+			}while(day10.getExceptionPops().size()==curExceptionCount && curInputIndex<inputLine.size());
+			if(day10.getExceptionPops().size()!=curExceptionCount) {
+				//corrupted line, ignore
+			} else {
+				day10.addCompletionSequence();
+			}
+			day10.setMyStack(new MyStack());
+		}
+		
+		for (ArrayList<String> completionList : day10.getCompletionStrings()) {
+			day10.calculateCompletionScore(completionList);
+		}
+		
+		System.out.println("All completion scores: " + day10.getCompletionScores());
+		
+		System.out.println("The middle completion score is: " + day10.getMiddleCompletionScore());
+		//After knowing add assert.
+		assertEquals(288957, day10.getMiddleCompletionScore());
 	}
 }
