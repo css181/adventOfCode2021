@@ -149,4 +149,25 @@ public class Day13Part1Test {
 		//Add assert after known
 		assertEquals(747, day13.getPaper().getTotalDots());
 	}
+	
+	@Test
+	void part2() throws Exception {
+		day13 = new Day13();
+		day13.getInputs();
+		
+		day13.applyDotsToPaper();
+		for (String fold : day13.getFolds()) {
+			day13.applyFoldToPaper(fold);
+		}
+		System.out.println(day13.getPaper());
+		//Add assert after known
+		String expected="" +
+		".##..###..#..#.####.###...##..#..#.#..#.\n" +
+		"#..#.#..#.#..#....#.#..#.#..#.#..#.#..#.\n" +
+		"#..#.#..#.####...#..#..#.#....#..#.####.\n" +
+		"####.###..#..#..#...###..#....#..#.#..#.\n" +
+		"#..#.#.#..#..#.#....#....#..#.#..#.#..#.\n" +
+		"#..#.#..#.#..#.####.#.....##...##..#..#.\n";
+		assertEquals(expected, day13.getPaper().toString());
+	}
 }
