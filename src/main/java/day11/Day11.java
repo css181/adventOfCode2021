@@ -61,10 +61,10 @@ public class Day11 {
 			//out of bounds, do nothing
 			return;
 		}
-		int curValue = octopusValues.get(row).get(col);
 		if(didFlash.get(row).get(col)) {
 			return;//Nothing to do, already flashed
 		}
+		int curValue = octopusValues.get(row).get(col);
 		if(curValue!=9) {
 			octopusValues.get(row).set(col, curValue+1);
 		} else {
