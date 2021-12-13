@@ -14,6 +14,8 @@ public class Day12 {
 	private ArrayList<Cave> otherCaves = new ArrayList<Cave>();
 	private ArrayList<ArrayList<String>> allPaths = new ArrayList<ArrayList<String>>();
 	private ArrayList<String> curPath = new ArrayList<String>();
+	private boolean alreadyHasADoubleLowerCase = false;
+	private String curDoubleAddedLowerCase = "";
 	private boolean keepSearchingPath = true;
 	private static File file;
 	
@@ -38,8 +40,10 @@ public class Day12 {
 	private void addConnectionToEachCave(String beforeName, String afterName) {
 		Cave before = getCave(beforeName);
 		Cave after = getCave(afterName);
-		before.addConnection(after);
-		after.addConnection(before);
+		if(!after.equals(startCave))
+			before.addConnection(after);
+		if(!before.equals(startCave))
+			after.addConnection(before);
 	}
 
 	private Cave getCave(String name) {
@@ -121,6 +125,34 @@ public class Day12 {
 			}
 			Cave next = it.next();
 			goToNext(next);
+		}
+		curPath.remove(curPath.size()-1);
+	}
+	
+	public void goToNextIfCanVisitOneLowerCaseTwice(Cave curCave) {
+		if(alreadyHasADoubleLowerCase && isSecondTimeLandingOnLowerCaseCave(curCave)) {
+			return;
+		} else if(isSecondTimeLandingOnLowerCaseCave(curCave)) {
+			alreadyHasADoubleLowerCase = true;
+			curDoubleAddedLowerCase = curCave.getName();
+		}
+		curPath.add(curCave.getName());
+		Iterator<Cave> it = curCave.getConnections().iterator();
+		if(curCave.equals(endCave)) {
+			allPaths.add(cloneList(curPath));
+		}
+		while(it.hasNext()) {
+			if(curCave.equals(startCave)) {
+				curPath = new ArrayList<String>();
+				curPath.add(startCave.getName());
+			}
+			Cave next = it.next();
+			goToNextIfCanVisitOneLowerCaseTwice(next);
+		}
+		String lastCave = curPath.get(curPath.size()-1);
+		if(alreadyHasADoubleLowerCase && lastCave.equals(curDoubleAddedLowerCase)) {
+			alreadyHasADoubleLowerCase = false;
+			curDoubleAddedLowerCase = "";
 		}
 		curPath.remove(curPath.size()-1);
 	}

@@ -45,12 +45,12 @@ public class Day12Part1Test {
 		day12.setFileToUse(new File(fileName.getPath()));
 
 		Cave expectedStart = new Cave("start");
+		//Note: nothing can link back to start
 		Cave expectedEnd = new Cave("end");
 		//Note: end should never have any connections,
 		//once we get to end, we're always done.
 		Cave expectedAb = new Cave("ab");
 		expectedStart.addConnection(expectedAb);
-		expectedAb.addConnection(expectedStart);
 		expectedAb.addConnection(expectedEnd);
 
 		day12.getInputs();
@@ -68,6 +68,7 @@ public class Day12Part1Test {
 		day12.setFileToUse(new File(fileName.getPath()));
 		
 		Cave start = new Cave("start");
+		//Note: nothing can link back to start
 		Cave end = new Cave("end");
 		//Note: end should never have any connections,
 		//once we get to end, we're always done.
@@ -78,10 +79,7 @@ public class Day12Part1Test {
 		Cave sa = new Cave("sa");
 		dc.addConnection(end);
 		start.addConnection(HN);
-		HN.addConnection(start);
 		start.addConnection(kj);
-		kj.addConnection(start);
-		dc.addConnection(start);
 		start.addConnection(dc);
 		dc.addConnection(HN);
 		HN.addConnection(dc);
@@ -153,6 +151,17 @@ public class Day12Part1Test {
 		day12.getInputs();
 		day12.goToNext(day12.getStartCave());
 		System.out.println("Total paths: " + day12.getAllPaths().size());
+		//after known add assert
+		assertEquals(4304, day12.getAllPaths().size());
 	}
 	
+	@Test
+	void part2_getAllPaths_when_can_go_to_single_lowerCase_twice() throws Exception {
+		day12 = new Day12();
+		day12.getInputs();
+		day12.goToNextIfCanVisitOneLowerCaseTwice(day12.getStartCave());
+		
+		System.out.println("Total paths with dupe lower case: " + day12.getAllPaths().size());
+		//after known add assert
+	}
 }
