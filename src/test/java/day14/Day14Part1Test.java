@@ -7,6 +7,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -163,19 +165,107 @@ public class Day14Part1Test {
 		assertEquals(1429, day14.getCountOfChar('N'));
 	}
 	
-//	@Test
-//	void confirm_40_steps_of_Sample() throws Exception {
-//		day14 = new Day14();
-//		day14.setPolymer(new char[] {'N','N','C','B'});
-//		URL fileName = getClass().getResource("SampleInput.txt");
-//		day14.setFileToUse(new File(fileName.getPath()));
-//		day14.getInputs();
-//		
-//		for(int step=0; step<40; step++) {
-//			day14.processRulesOnPolymer();
-//		}
-//		
-//		assertEquals(2192039569602l, day14.getCountOfChar('B'));
-//		assertEquals(3849876073l, day14.getCountOfChar('H'));
-//	}
+	@Test
+	void can_get_value_of_charPairs_from_new_CharPair() throws Exception {
+		HashMap<CharPair, Long> charPairs = new HashMap<CharPair, Long>();
+		long expected = 57l;
+		charPairs.put(new CharPair('A', 'B'), expected);
+		assertEquals(expected, charPairs.get(new CharPair('A', 'B')));
+	}
+	
+	@Test
+	void can_count_pairs() throws Exception {
+		day14 = new Day14();
+		day14.setPolymer(new char[] {'N','N','C','B'});
+		URL fileName = getClass().getResource("SampleInput.txt");
+		day14.setFileToUse(new File(fileName.getPath()));
+		day14.getInputs();
+		
+		day14.processRulesOnCharPairs();
+		assertEquals(2, day14.getCountOfCharFromCharPairs('B'));
+		assertEquals(2, day14.getCountOfCharFromCharPairs('C'));
+		assertEquals(1, day14.getCountOfCharFromCharPairs('H'));
+		assertEquals(2, day14.getCountOfCharFromCharPairs('N'));
+
+		day14.processRulesOnCharPairs();
+		assertEquals(6, day14.getCountOfCharFromCharPairs('B'));
+		assertEquals(4, day14.getCountOfCharFromCharPairs('C'));
+		assertEquals(1, day14.getCountOfCharFromCharPairs('H'));
+		assertEquals(2, day14.getCountOfCharFromCharPairs('N'));
+		
+		day14.processRulesOnCharPairs();
+		assertEquals(11, day14.getCountOfCharFromCharPairs('B'));
+		assertEquals(5, day14.getCountOfCharFromCharPairs('C'));
+		assertEquals(4, day14.getCountOfCharFromCharPairs('H'));
+		assertEquals(5, day14.getCountOfCharFromCharPairs('N'));
+		
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		day14.processRulesOnCharPairs();
+		
+		//after 10:
+		assertEquals(1749, day14.getCountOfCharFromCharPairs('B'));
+		assertEquals(298, day14.getCountOfCharFromCharPairs('C'));
+		assertEquals(161, day14.getCountOfCharFromCharPairs('H'));
+		assertEquals(865, day14.getCountOfCharFromCharPairs('N'));
+		
+		for(int x=0; x<30; x++)
+			day14.processRulesOnCharPairs();
+		
+		//after 40:
+		assertEquals(2192039569602l, day14.getCountOfCharFromCharPairs('B'));
+		assertEquals(3849876073l, day14.getCountOfCharFromCharPairs('H'));
+	}
+	
+
+	@Test
+	void part2_full() throws Exception {
+		day14 = new Day14();
+		day14.getInputs();
+		
+		for(int step=0; step<40; step++) {
+			day14.processRulesOnCharPairs();
+		}
+		
+		System.out.println("Total 40 steps:");
+		ArrayList<Long> totals = new ArrayList<Long>();
+		long total = 0;
+		System.out.println("V: " + day14.getCountOfCharFromCharPairs('V'));
+		System.out.println("H: " + day14.getCountOfCharFromCharPairs('H'));
+		System.out.println("C: " + day14.getCountOfCharFromCharPairs('C'));
+		System.out.println("K: " + day14.getCountOfCharFromCharPairs('K'));
+		System.out.println("B: " + day14.getCountOfCharFromCharPairs('B'));
+		System.out.println("F: " + day14.getCountOfCharFromCharPairs('F'));
+		System.out.println("O: " + day14.getCountOfCharFromCharPairs('O'));
+		System.out.println("P: " + day14.getCountOfCharFromCharPairs('P'));
+		System.out.println("S: " + day14.getCountOfCharFromCharPairs('S'));
+		System.out.println("N: " + day14.getCountOfCharFromCharPairs('N'));
+		total+=day14.getCountOfCharFromCharPairs('V')+day14.getCountOfCharFromCharPairs('H')+day14.getCountOfCharFromCharPairs('C')
+			+day14.getCountOfCharFromCharPairs('K')+day14.getCountOfCharFromCharPairs('B')+day14.getCountOfCharFromCharPairs('F')
+			+day14.getCountOfCharFromCharPairs('O')+day14.getCountOfCharFromCharPairs('P')+day14.getCountOfCharFromCharPairs('S')
+			+day14.getCountOfCharFromCharPairs('N');
+		System.out.println("Total found: " + total);
+		totals.add(day14.getCountOfCharFromCharPairs('V'));
+		totals.add(day14.getCountOfCharFromCharPairs('H'));
+		totals.add(day14.getCountOfCharFromCharPairs('C'));
+		totals.add(day14.getCountOfCharFromCharPairs('K'));
+		totals.add(day14.getCountOfCharFromCharPairs('B'));
+		totals.add(day14.getCountOfCharFromCharPairs('F'));
+		totals.add(day14.getCountOfCharFromCharPairs('O'));
+		totals.add(day14.getCountOfCharFromCharPairs('P'));
+		totals.add(day14.getCountOfCharFromCharPairs('S'));
+		totals.add(day14.getCountOfCharFromCharPairs('N'));
+		Collections.sort(totals);
+		System.out.println("Least=" + totals.get(0));
+		System.out.println("Most=" + totals.get(totals.size()-1));
+		System.out.println("Answer=" + (totals.get(totals.size()-1) - totals.get(0)));
+		//Add asserts after known
+		assertEquals(806833108703l, totals.get(0));
+		assertEquals(4125670671826l, totals.get(totals.size()-1));
+		assertEquals(20890720927745l, total);
+	}
 }

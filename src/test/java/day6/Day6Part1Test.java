@@ -167,25 +167,6 @@ public class Day6Part1Test {
 	}
 	
 	@Test
-	void get_total_reps_for_0_start_250_days() throws Exception {
-		System.out.println("0 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(0, 256));
-		System.out.println("1 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(1, 256));
-		System.out.println("2 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(2, 256));
-		System.out.println("3 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(3, 256));
-		System.out.println("4 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(4, 256));
-		System.out.println("5 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(5, 256));
-		System.out.println("6 start 256 days: " + day6.getNumberOfReproductionsForStartOverXDays(6, 256));
-	}
-	
-	@Test
-	void part2_answer() throws Exception {
-		day6 = new Day6();
-		day6.populateFishArray();
-		long expected = 1710166656900l;
-		assertEquals(expected, day6.getTotalNumAfter256Days());
-	}
-	
-	@Test
 	void part2_performant() throws Exception {
 		Day6Performant day6 = new Day6Performant();
 		day6.populateFishArray();

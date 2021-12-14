@@ -72,11 +72,5 @@ public class Day6 {
 		return total;
 	}
 
-	public Long getTotalNumAfter256Days() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 }
