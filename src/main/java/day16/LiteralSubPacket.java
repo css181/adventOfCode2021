@@ -3,6 +3,8 @@ package day16;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import day3.DecimalUtil;
+
 public class LiteralSubPacket extends SubPacket{
 
 	private FourBit[] literalValue;
@@ -41,6 +43,18 @@ public class LiteralSubPacket extends SubPacket{
 		return literalValue;
 	}
 
+	public long getDecimalValue() {
+		ArrayList<Integer> binaryList = new ArrayList<Integer>();
+		for (FourBit fourBit : literalValue) {
+			binaryList.add(fourBit.getFirst());
+			binaryList.add(fourBit.getSecond());
+			binaryList.add(fourBit.getThird());
+			binaryList.add(fourBit.getFourth());
+		}
+		int[] binaryArray = binaryList.stream().mapToInt(Integer::intValue).toArray();
+		return DecimalUtil.getDecimal(binaryArray);
+	}
+
 	@Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -67,4 +81,5 @@ public class LiteralSubPacket extends SubPacket{
 		+ ", literalValue: " + printArray(literalValue) + "]";
 		return print;
     }
+
 }

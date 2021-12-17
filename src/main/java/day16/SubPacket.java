@@ -2,6 +2,8 @@ package day16;
 
 import java.util.Arrays;
 
+import day3.DecimalUtil;
+
 public abstract class SubPacket {
 
 	protected int[] version;
@@ -22,6 +24,9 @@ public abstract class SubPacket {
 	}
 	public int[] getTypeId() {
 		return typeId;
+	}
+	public int getTypeIdValue() {
+		return (int)DecimalUtil.getDecimal(typeId);
 	}
 	public int getLastPositionProcessed() {
 		return lastPosProcessed;

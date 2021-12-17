@@ -3,7 +3,8 @@ package day3;
 import java.util.ArrayList;
 
 public class DecimalUtil {
-	
+
+	//NOTE: This assumes (1,0,0) = 1 reading left to right
 	public static long getDecimal(ArrayList<Integer> bytes) {
 		long total = 0;
 		for (int i=0; i<bytes.size(); i++) {
@@ -12,6 +13,8 @@ public class DecimalUtil {
 		}
 		return total;
 	}
+	
+	//NOTE: This assumes [1,0,0] = 4 reading right to left
 	public static long getDecimal(int[] bytes) {
 		long total = 0;
 		for (int i=bytes.length-1; i>=0; i--) {
@@ -20,6 +23,8 @@ public class DecimalUtil {
 		}
 		return total;
 	}
+	
+	//NOTE: This assumes (1,0,0) = 1 reading left to right
 	public static long getDecimal(String bytes) {
 		long total = 0;
 		for (int i=0; i<bytes.length(); i++) {

@@ -100,4 +100,78 @@ public class Day16 {
 		}
 		return total;
 	}
+
+	public long processPacket(SubPacket packet) {
+		long processedValue = -1;
+		if(packet.getTypeIdValue()==4) {
+			//Return literal Value
+			return ((LiteralSubPacket) packet).getDecimalValue();
+		}
+		SubPacket[] subPackets = ((OperatorSubPacket)packet).getSubPackets();
+		switch (packet.getTypeIdValue()) {
+		case 0:
+			processedValue = 0;
+			for (SubPacket subPacket : subPackets) {
+				processedValue+=processPacket(subPacket);
+			}
+			break;
+		case 1:
+			processedValue = 1;
+			for (SubPacket subPacket : subPackets) {
+				processedValue*=processPacket(subPacket);
+			}
+			break;
+		case 2:
+			processedValue = Integer.MAX_VALUE;
+			for (SubPacket subPacket : subPackets) {
+				long curProcessValue = processPacket(subPacket);
+				if(curProcessValue<processedValue) {
+					processedValue = curProcessValue;
+				}
+			}
+			break;
+		case 3:
+			processedValue = Integer.MIN_VALUE;
+			for (SubPacket subPacket : subPackets) {
+				long curProcessValue = processPacket(subPacket);
+				if(curProcessValue>processedValue) {
+					processedValue = curProcessValue;
+				}
+			}
+			break;
+		case 5:
+			if(subPackets.length!=2) {
+				throw new RuntimeException("Can't process greater than, cause there are [" + subPackets.length + "] subPackets.");
+			}
+			if(processPacket(subPackets[0]) > processPacket(subPackets[1])) {
+				processedValue = 1;
+			} else {
+				processedValue = 0;
+			}
+			break;
+		case 6:
+			if(subPackets.length!=2) {
+				throw new RuntimeException("Can't process less than, cause there are [" + subPackets.length + "] subPackets.");
+			}
+			if(processPacket(subPackets[0]) < processPacket(subPackets[1])) {
+				processedValue = 1;
+			} else {
+				processedValue = 0;
+			}
+			break;
+		case 7:
+			if(subPackets.length!=2) {
+				throw new RuntimeException("Can't process equal, cause there are [" + subPackets.length + "] subPackets.");
+			}
+			if(processPacket(subPackets[0]) == processPacket(subPackets[1])) {
+				processedValue = 1;
+			} else {
+				processedValue = 0;
+			}
+			break;
+		default:
+			throw new RuntimeException("Can't process packet.  Unknown packet TypeID: " + packet.getTypeIdValue());
+		}
+		return processedValue;
+	}
 }

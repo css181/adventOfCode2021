@@ -79,6 +79,7 @@ public class Day16Part1Test {
 		assertTrue(Arrays.equals(expectedVersion, actual.version));
 		assertTrue(Arrays.equals(expectedTypeID, actual.typeId));
 		assertTrue(Arrays.deepEquals(expectedLiteralValue, actual.getLiteralValue()));
+		assertEquals(2021, actual.getDecimalValue());
 	}
 
 	@Test
@@ -228,6 +229,110 @@ public class Day16Part1Test {
 		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
 		
 		OperatorSubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
-		System.out.println("Total Version sum: " + day16.getSumOfAllVersionsIncludingNestedSubPackets(outerMostPacket));
+//		System.out.println("Total Version sum: " + day16.getSumOfAllVersionsIncludingNestedSubPackets(outerMostPacket));
+		//Add assertion after known:
+		assertEquals(1007, day16.getSumOfAllVersionsIncludingNestedSubPackets(outerMostPacket));
+	}
+	
+
+	@Test
+	void typeId_0_will_process_to_find_sum_of_all_subPackets() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("C200B40A82");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(3, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_1_will_process_to_find_product_of_all_subPackets() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("04005AC33890");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(54, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_2_will_process_to_find_minimum_of_all_subPackets() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("880086C3E88112");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(7, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_3_will_process_to_find_maximum_of_all_subPackets() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("CE00C43D881120");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(9, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_5_will_process_to_return_1_if_first_subPacket_is_greater_than_second() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("F600BC2D8F");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(0, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_6_will_process_to_return_1_if_first_subPacket_is_less_than_second() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("D8005AC2A8F0");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(1, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void typeId_7_will_process_to_return_1_if_first_is_equal_to_second() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("9C005AC2F8F0");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(0, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void test_equals_of_sum_and_product() throws Exception {
+		day16 = new Day16();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray("9C0141080250320F1802104A08");
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		SubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		
+		assertEquals(1, day16.processPacket(outerMostPacket));
+	}
+	
+	@Test
+	void part2_full_test() throws Exception {
+		day16 = new Day16();
+		day16.getInputs();
+		FourBit[] fourBitArray = day16.convertHexToFourBitArray(day16.getHexInput());
+		int[] binaryArray = day16.getBinaryArrayFromFourBitArray(fourBitArray);
+		
+		OperatorSubPacket outerMostPacket = new OperatorSubPacket(binaryArray);
+		System.out.println("Process Value: " + day16.processPacket(outerMostPacket));
+		//Add assertion after known:
+		assertEquals(834151779165l, day16.processPacket(outerMostPacket));
 	}
 }
