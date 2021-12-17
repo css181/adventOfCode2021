@@ -119,18 +119,38 @@ public class Day17 {
 
 	public ArrayList<Integer> getPossibleYs() {
 		ArrayList<Integer> possibleYs = new ArrayList<Integer>();
-		for(int yTry=0; yTry<500; yTry++) {
-			int yHigh = (yTry*yTry+yTry)/2;
+		for(int yTry=targetBottomRight.getY(); yTry<1000; yTry++) {
+			int yHigh;
+			if(yTry>0) {
+				yHigh = (yTry*yTry+yTry)/2;
+			} else {
+				yHigh=yTry;
+			}
 			int step=0;
 			do {
-				step++;
 				yHigh-=step;
 				if(yHigh<=targetTopLeft.getY() && yHigh>=targetBottomRight.getY()) {
 					possibleYs.add(yTry);
 					break;
 				}
+				step++;
 			}while(yHigh>targetBottomRight.getY());
 		}
 		return possibleYs;
+	}
+	
+	public ArrayList<Coordinate> getAllPossibleVelocitiesThatWillHit() {
+		ArrayList<Coordinate> possibleVelocities = new ArrayList<Coordinate>();
+		ArrayList<Integer> possibleYs = getPossibleYs();
+		for(int xTry=1; xTry<=targetBottomRight.getX(); xTry++) {
+			for (int yTry : possibleYs) {
+				Coordinate curTryVelocity = new Coordinate(xTry, yTry);
+				int curTryYMax = fireProbeWithVelocity(curTryVelocity);
+				if(curTryYMax>Integer.MIN_VALUE) {
+					possibleVelocities.add(curTryVelocity);
+				}
+			}
+		}
+		return possibleVelocities;
 	}
 }
