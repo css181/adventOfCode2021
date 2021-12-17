@@ -6,9 +6,9 @@ public class ProbeFireArea {
 	private int yOffset;
 
 	private char[][] grid;
-	public ProbeFireArea(int maxX, int maxY, int minY) {
-		yOffset = minY*-1;
-		grid = new char[maxY+Math.abs(minY)][maxX];
+	public ProbeFireArea(int maxX, int maxY, int subYPos) {
+		yOffset = subYPos*-1;
+		grid = new char[maxY][maxX];
 		for(int row=0; row<grid.length; row++) {
 			for(int col=0; col<grid[row].length; col++) {
 				grid[row][col] = '.';
@@ -44,12 +44,12 @@ public class ProbeFireArea {
 
 	@Override
     public String toString() {
-		String print = "0 - ";
+		String print = "";
 		for(int row=0; row<grid.length; row++) {
 			for(int col=0; col<grid[row].length; col++) {
 				print+=grid[row][col];
 			}
-			print+="\n" + row+1 + " - ";
+			print+="\n";
 		}
 		return print;
     }

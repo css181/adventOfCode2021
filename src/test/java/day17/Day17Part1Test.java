@@ -38,7 +38,7 @@ public class Day17Part1Test {
 				"...............................\n" +
 				"...............................\n" +
 				"...............................\n";
-		day17.defineArea(31, 11, -3);
+		day17.defineArea(31, 14, -3);
 		ProbeFireArea actual = day17.getArea();
 		assertEquals(expectedPrint, actual.toString());
 	}
@@ -61,9 +61,9 @@ public class Day17Part1Test {
 				"....................TTTTTTTTTTT\n" +
 				"....................TTTTTTTTTTT\n" +
 				"....................TTTTTTTTTTT\n";
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
-		day17.defineArea(31, 11, -3);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
+		day17.defineArea(31, 14, -3);
 		day17.applyTargetToArea();
 		assertEquals(expectedPrint, day17.getArea().toString());
 	}
@@ -86,9 +86,9 @@ public class Day17Part1Test {
 				"....................TTTTTTTTTTT\n" +
 				"....................TTTTTTTTTTT\n" +
 				"....................TTTTTTTTTTT\n";
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
-		day17.defineArea(31, 11, -3);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
+		day17.defineArea(31, 14, -3);
 		day17.applyTargetToArea();
 		day17.fireProbeWithVelocity(new Coordinate(7,2));
 		assertEquals(expectedPrint, day17.getArea().toString());
@@ -115,9 +115,9 @@ public class Day17Part1Test {
 				+ "....................TTTTTTTTTTT\n"
 				+ "....................T#TTTTTTTTT\n"
 				+ "....................TTTTTTTTTTT\n";
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
-		day17.defineArea(31, 11, -6);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
+		day17.defineArea(31, 17, -6);
 		day17.applyTargetToArea();
 		int actual = day17.fireProbeWithVelocity(new Coordinate(6,3));
 		assertEquals(expectedPrint, day17.getArea().toString());
@@ -139,8 +139,8 @@ public class Day17Part1Test {
 				  + "....................TTTTTTTTTTT\n"
 				  + "....................TTTTTTTTTTT\n"
 				  + "....................TTTTTTTTTTT\n";
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
 		day17.defineArea(31, 11, 0);
 		day17.applyTargetToArea();
 		int actual = day17.fireProbeWithVelocity(new Coordinate(9,0));
@@ -151,8 +151,8 @@ public class Day17Part1Test {
 	@Test
 	void will_stop_processing_steps_if_we_miss_before_minX_then_after_maxX() throws Exception {
 		day17 = new Day17();
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
 		day17.defineArea(31, 11, 0);
 		day17.applyTargetToArea();
 		int actual = day17.fireProbeWithVelocity(new Coordinate(17,-4));
@@ -162,8 +162,8 @@ public class Day17Part1Test {
 	@Test
 	void will_stop_processing_steps_if_we_miss_before_minY_then_after_maxY() throws Exception {
 		day17 = new Day17();
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
 		day17.defineArea(31, 11, 0);
 		day17.applyTargetToArea();
 		int actual = day17.fireProbeWithVelocity(new Coordinate(11,-5));
@@ -173,14 +173,23 @@ public class Day17Part1Test {
 	@Test
 	void verify_6_9_is_highest_ever_y_value_that_can_hit_target() throws Exception {
 		day17 = new Day17();
-		day17.targetTopLeft = new Coordinate(20, -10);
-		day17.targetBottomRight = new Coordinate(30, -5);
-		day17.defineArea();
+		day17.targetTopLeft = new Coordinate(20, -5);
+		day17.targetBottomRight = new Coordinate(30, -10);
+		day17.defineArea(200);
 		day17.applyTargetToArea();
-		Coordinate expectedVelocity = new Coordinate(6, 11);
+		Coordinate expectedVelocity = new Coordinate(6, 9);
 		
-//		assertEquals(expectedVelocity, day17.getVelocityOfHighestYValueToHitTarget());
-		day17.fireProbeWithVelocity(expectedVelocity);
-		System.out.println(day17.getArea());
+		assertEquals(expectedVelocity, day17.getVelocityOfHighestYValueToHitTarget());
+	}
+	
+	@Test
+	void part1_full_test() throws Exception {
+		day17 = new Day17();
+		day17.getInputs();
+		day17.defineArea(1200);
+		day17.applyTargetToArea();
+		System.out.println("Best velocity: " + day17.getVelocityOfHighestYValueToHitTarget());
+		System.out.println("Highest Pos at (24,44): " + day17.fireProbeWithVelocity(new Coordinate(24, 44)));
+//		System.out.println(day17.getArea());
 	}
 }
