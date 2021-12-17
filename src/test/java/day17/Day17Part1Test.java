@@ -180,16 +180,23 @@ public class Day17Part1Test {
 		Coordinate expectedVelocity = new Coordinate(6, 9);
 		
 		assertEquals(expectedVelocity, day17.getVelocityOfHighestYValueToHitTarget());
+		assertEquals(45, day17.fireProbeWithVelocity(expectedVelocity));
 	}
 	
 	@Test
 	void part1_full_test() throws Exception {
 		day17 = new Day17();
 		day17.getInputs();
-		day17.defineArea(1200);
+		day17.defineArea(10000);
 		day17.applyTargetToArea();
-		System.out.println("Best velocity: " + day17.getVelocityOfHighestYValueToHitTarget());
-		System.out.println("Highest Pos at (24,44): " + day17.fireProbeWithVelocity(new Coordinate(24, 44)));
-//		System.out.println(day17.getArea());
+		Coordinate actualBestVelocity = day17.getVelocityOfHighestYValueToHitTarget();
+		System.out.println("Best velocity: " + actualBestVelocity);
+		int actualHighY = day17.fireProbeWithVelocity(actualBestVelocity);
+		System.out.println("Highest Pos at " + actualBestVelocity + ": " + actualHighY);
+		//Add asserts after known
+		assertEquals(new Coordinate(22, 90), actualBestVelocity);
+		assertEquals(4095, actualHighY);
 	}
+	
+	
 }

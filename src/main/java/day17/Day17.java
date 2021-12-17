@@ -3,10 +3,6 @@ package day17;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import day1.FileUtility;
-import day3.DecimalUtil;
 
 public class Day17 {
 	
@@ -106,43 +102,35 @@ public class Day17 {
 	public Coordinate getVelocityOfHighestYValueToHitTarget() {
 		int maxYEver = Integer.MIN_VALUE;
 		Coordinate topVelocity = null;
-		int xTry=0;
-		int yTry=0;
-		int maxYTry=0;
 		int curTryYMax;
-		do {
-			Coordinate curTryVelocity = new Coordinate(xTry, yTry);
-			curTryYMax=fireProbeWithVelocity(curTryVelocity);
-			if(yTry>maxYTry) {
-				maxYTry=Integer.valueOf(yTry);
-			}
-			if(curTryYMax>maxYEver) {
-				maxYEver=curTryYMax;
-				topVelocity = curTryVelocity;
-			}
-			if(curTryYMax==Integer.MIN_VALUE) {
-				//Did NOT hit
-				if(missedByOverTargetY) {
-					xTry++;
-					yTry=0;
-					missedByOverTargetY = false;
-				}else if(missedByOverTargetX) {
-					if(yTry==maxYTry) {
-						break;
-					}
-					yTry++;
-					xTry=0;
-					missedByOverTargetX = false;
-				} else {
-					//Just a close miss
-					yTry++;
+		ArrayList<Integer> possibleYs = getPossibleYs();
+		for(int xTry=1; xTry<targetTopLeft.getX(); xTry++) {
+			for (Integer yTry : possibleYs) {
+				Coordinate curTryVelocity = new Coordinate(xTry, yTry);
+				curTryYMax=fireProbeWithVelocity(curTryVelocity);
+				if(curTryYMax>maxYEver) {
+					maxYEver=curTryYMax;
+					topVelocity = curTryVelocity;
 				}
-			} else {
-				//DID hit
-				yTry++;
 			}
-		}while(!didOverShootTarget);
+		}
 		return topVelocity;
 	}
 
+	public ArrayList<Integer> getPossibleYs() {
+		ArrayList<Integer> possibleYs = new ArrayList<Integer>();
+		for(int yTry=0; yTry<500; yTry++) {
+			int yHigh = (yTry*yTry+yTry)/2;
+			int step=0;
+			do {
+				step++;
+				yHigh-=step;
+				if(yHigh<=targetTopLeft.getY() && yHigh>=targetBottomRight.getY()) {
+					possibleYs.add(yTry);
+					break;
+				}
+			}while(yHigh>targetBottomRight.getY());
+		}
+		return possibleYs;
+	}
 }
