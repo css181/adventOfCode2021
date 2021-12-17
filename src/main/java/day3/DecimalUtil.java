@@ -12,6 +12,14 @@ public class DecimalUtil {
 		}
 		return total;
 	}
+	public static long getDecimal(int[] bytes) {
+		long total = 0;
+		for (int i=bytes.length-1; i>=0; i--) {
+			long thisByte = (long) Math.pow(2, i);
+			total+=thisByte*bytes[(bytes.length-1)-i];
+		}
+		return total;
+	}
 	public static long getDecimal(String bytes) {
 		long total = 0;
 		for (int i=0; i<bytes.length(); i++) {
@@ -20,4 +28,5 @@ public class DecimalUtil {
 		}
 		return total;
 	}
+	
 }

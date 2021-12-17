@@ -39,6 +39,22 @@ public class FileUtility {
 		return array;
 	}
 	
+	public static String convertFileToString(File file) {
+		String oneLineInput = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		    	oneLineInput = line;
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return oneLineInput;
+	}
+
+	
 	//Used for putting into Array of Array of single character strings
 	public static ArrayList<ArrayList<String>> convertFileToStringArrayOfArrays(File file) {
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
@@ -77,6 +93,28 @@ public class FileUtility {
 			e.printStackTrace();
 		}
 		return listOfLists;
+	}
+	
+
+	public static int[][] convertFileToIntArrayOfArrays(File file) {
+		ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> curList;
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		    	curList = new ArrayList<Integer>();
+				for(int x=0; x<line.length(); x++) {
+					curList.add(Integer.valueOf(String.valueOf(line.charAt(x))));
+				}
+				listOfLists.add(curList);
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int[][] intArray = listOfLists.stream().map(  u  ->  u.stream().mapToInt(i->i).toArray()  ).toArray(int[][]::new);
+		return intArray;
 	}
 
 }
