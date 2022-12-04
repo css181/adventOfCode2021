@@ -1,10 +1,11 @@
 package day25.spots;
 
-public class EastCucumber implements Spot {
+import day25.Coordinate;
 
-	@Override
-	public boolean isEmpty() {
-		return false;
+public class EastCucumber extends Cucumber{
+
+	public EastCucumber(Coordinate coordinate) {
+		super(coordinate);
 	}
 
 	@Override

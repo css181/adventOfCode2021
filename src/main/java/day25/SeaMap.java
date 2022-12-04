@@ -5,49 +5,49 @@ import java.util.ArrayList;
 import day25.spots.EastCucumber;
 import day25.spots.EmptySpot;
 import day25.spots.SouthCucumber;
-import day25.spots.Spot;
+import day25.spots.ISpot;
 
 public class SeaMap {
 
-	private ArrayList<ArrayList<Spot>> map;
+	private ArrayList<ArrayList<ISpot>> map;
 	public SeaMap() {
-		map = new ArrayList<ArrayList<Spot>>();
+		map = new ArrayList<ArrayList<ISpot>>();
 	}
 	
 	public SeaMap(ArrayList<ArrayList<Character>> input) {
-		map = new ArrayList<ArrayList<Spot>>();
+		map = new ArrayList<ArrayList<ISpot>>();
 		for (int row=0; row<input.size(); row++) {
     		ArrayList<Character> curRow = input.get(row);
-    		map.add(new ArrayList<Spot>());
+    		map.add(new ArrayList<ISpot>());
 			for (int col=0; col<curRow.size(); col++) {
-				Spot spot = convertCharToSpot(input.get(row).get(col));
+				ISpot spot = convertCharToSpot(input.get(row).get(col), new Coordinate(row, col));
 				map.get(row).add(spot);
 			}
 		}
 	}
 
-	private Spot convertCharToSpot(Character character) {
+	private ISpot convertCharToSpot(Character character, Coordinate current) {
 		switch (character) {
 		case '.':
-			return new EmptySpot();
+			return new EmptySpot(current);
 		case 'v':
-			return new SouthCucumber();
+			return new SouthCucumber(current);
 		case '>':
-			return new EastCucumber();
+			return new EastCucumber(current);
 		default:
 			throw new RuntimeException("Invalid map character: " + character);
 		}
 	}
 	
-	public Spot getSpot(int x, int y) {
+	public ISpot getSpot(int x, int y) {
 		return map.get(x).get(y);
 	}
 
 	@Override
     public String toString() {
     	String print = "";
-    	for (ArrayList<Spot> row : map) {
-			for (Spot spot : row) {
+    	for (ArrayList<ISpot> row : map) {
+			for (ISpot spot : row) {
 				print+=spot.displayValue();
 			}
 			print+="\n";

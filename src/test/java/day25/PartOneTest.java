@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import day1.FileUtility;
+import day25.spots.EastCucumber;
 
 
 public class PartOneTest {
@@ -95,57 +96,12 @@ public class PartOneTest {
 		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,8).isEmpty());
 		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,9).isEmpty());
 		
-
 		assertEquals(false, mapFromInput.getSeaMap().getSpot(8,9).isEmpty());
 	}
 	
-//	@Test
-//	//SmallerElf=>Elf with smaller range.  If both same range, then the first input Elf.
-//	void make_correct_elf_smallerElf_for_each_pair() throws Exception {
-//		ArrayList<ElfPair> expectedElfPairs = new ArrayList<ElfPair>();
-//		expectedElfPairs.add(new ElfPair(new Elf("2-4"), new Elf("6-8")));
-//		expectedElfPairs.add(new ElfPair(new Elf("2-3"), new Elf("4-5")));
-//		expectedElfPairs.add(new ElfPair(new Elf("5-7"), new Elf("7-9")));
-//		expectedElfPairs.add(new ElfPair(new Elf("2-8"), new Elf("3-7")));
-//		expectedElfPairs.add(new ElfPair(new Elf("6-6"), new Elf("4-6")));
-//		expectedElfPairs.add(new ElfPair(new Elf("2-6"), new Elf("4-8")));
-//		
-//		URL fileName = getClass().getResource("SampleInput.txt");
-//		mapFromInput.setFileToUse(new File(fileName.getPath()));
-//		mapFromInput.populateElfPairs();
-//		assertEquals(new Elf("2-4"), mapFromInput.getElfPairs().get(0).getSmallerElf());
-//		assertEquals(new Elf("2-3"), mapFromInput.getElfPairs().get(1).getSmallerElf());
-//		assertEquals(new Elf("5-7"), mapFromInput.getElfPairs().get(2).getSmallerElf());
-//		assertEquals(new Elf("3-7"), mapFromInput.getElfPairs().get(3).getSmallerElf());
-//		assertEquals(new Elf("6-6"), mapFromInput.getElfPairs().get(4).getSmallerElf());
-//		assertEquals(new Elf("2-6"), mapFromInput.getElfPairs().get(5).getSmallerElf());
-//	}
-//	
-//	@Test
-//	void verify_isSmallerContainedInLarger() throws Exception {
-//		URL fileName = getClass().getResource("SampleInput.txt");
-//		mapFromInput.setFileToUse(new File(fileName.getPath()));
-//		mapFromInput.populateElfPairs();
-//		assertEquals(false, mapFromInput.getElfPairs().get(0).isSmallerContainedInLarger());
-//		assertEquals(false, mapFromInput.getElfPairs().get(1).isSmallerContainedInLarger());
-//		assertEquals(false, mapFromInput.getElfPairs().get(2).isSmallerContainedInLarger());
-//		assertEquals(true, mapFromInput.getElfPairs().get(3).isSmallerContainedInLarger());
-//		assertEquals(true, mapFromInput.getElfPairs().get(4).isSmallerContainedInLarger());
-//		assertEquals(false, mapFromInput.getElfPairs().get(5).isSmallerContainedInLarger());
-//	}
-//	
-//	@Test
-//	void verify_number_of_totalContainedPairs_in_elfPairs() throws Exception {
-//		URL fileName = getClass().getResource("SampleInput.txt");
-//		mapFromInput.setFileToUse(new File(fileName.getPath()));
-//		mapFromInput.populateElfPairs();
-//		assertEquals(2, mapFromInput.getTotalContainedPairs());
-//	}
-//	
-//	@Test
-//	void partOne_Answer() throws Exception {
-//		mapFromInput.populateElfPairs();
-////		System.out.println(elfPairsFromInput.getTotalContainedPairs());
-//		assertEquals(500, mapFromInput.getTotalContainedPairs());
-//	}
+	@Test
+	void each_cucumber_has_a_next_move_and_can_check_if_it_can_move() throws Exception {
+		EastCucumber cuc1 = new EastCucumber(new Coordinate(0, 0));
+		
+	}
 }

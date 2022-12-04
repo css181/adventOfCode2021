@@ -1,6 +1,12 @@
 package day25.spots;
 
-public class EmptySpot implements Spot {
+import day25.Coordinate;
+
+public class EmptySpot extends Spot {
+
+	public EmptySpot(Coordinate coordinate) {
+		super(coordinate);
+	}
 
 	@Override
 	public boolean isEmpty() {

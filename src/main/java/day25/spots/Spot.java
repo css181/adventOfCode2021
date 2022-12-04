@@ -1,7 +1,26 @@
 package day25.spots;
 
-public interface Spot {
+import day25.Coordinate;
 
-	public boolean isEmpty();
-	public String displayValue();
+public abstract class Spot implements ISpot {
+
+	protected Coordinate coordinate;
+	
+	Spot(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return true;
+	}
+
+	@Override
+	public String displayValue() {
+		return ".";
+	}
+
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
 }
