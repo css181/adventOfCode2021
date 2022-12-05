@@ -1,6 +1,7 @@
 package day25;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -32,6 +33,33 @@ public class SeaMapFromInput {
 	public SeaMap getSeaMap() {
 		return seaMap;
 	}
+	
+	public int getNumOfStepsUntilNoMovesArePossible() {
+		int numOfSteps = 0;
+		ISpot [][] preStepMap = null;
+		do {
+			preStepMap = createNewCopyOfMap(seaMap.getMap());
+			performMoveStep();
+			numOfSteps++;
+			if(numOfSteps==58) {
+				System.out.println("break");
+			}
+		} while (!areMapsEqual(preStepMap, seaMap.getMap()) && numOfSteps < 10000);
+		return numOfSteps;
+	}
+
+	private boolean areMapsEqual(ISpot[][] one, ISpot[][] two) {
+		if(one.length != two.length) { return false; }
+		for(int row=0; row<one.length; row++) {
+			if(one[row].length != two[row].length) { return false; }
+			for(int col=0; col<one[row].length; col++) {
+				if(!one[row][col].equals(two[row][col])) { 
+					return false; 
+				}
+			}
+		}
+		return true;
+	}
 
 	public void performMoveStep() {
 		ISpot[][] newMap = createNewCopyOfMap(seaMap.getMap());
@@ -40,9 +68,19 @@ public class SeaMapFromInput {
 	}
 
 	private ISpot[][] createNewCopyOfMap(ISpot[][] map) {
-		ISpot [][] newMap = new ISpot[map.length][];
-		for(int i = 0; i < map.length; i++)
-			newMap[i] = map[i].clone();
+		ISpot [][] newMap = new ISpot[map.length][map[0].length];
+		for(int row=0; row<map.length; row++) {
+			for(int col=0; col<map[row].length; col++) {
+				ISpot spot = null;
+				try {
+					spot = map[row][col].getClass().getDeclaredConstructor(Coordinate.class).newInstance(new Coordinate(col, row));
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+				}
+				newMap[row][col] = spot;
+			}
+		}
 		return newMap;
 	}
 
@@ -56,7 +94,7 @@ public class SeaMapFromInput {
 				}
 			}
 		}
-		seaMap.setMap(newMap);
+		seaMap.setMap(createNewCopyOfMap(newMap));
 	}
 	//TODO: Figure out how to parameterize instanceOf
 	private void attemptToMoveAllSouthCucumbers(ISpot[][] newMap) {
@@ -64,12 +102,7 @@ public class SeaMapFromInput {
 			for (ISpot spot : row) {
 				if(spot instanceof SouthCucumber) {
 					if(((Cucumber)spot).isAbleToMove(seaMap.getMap())) {
-						System.out.println("BEFORE:");
-						printMap(newMap);
 						((Cucumber)spot).performMove(newMap);
-						System.out.println("AFTER:");
-						printMap(newMap);
-						System.out.println("break");
 					}
 				}
 			}
@@ -77,13 +110,20 @@ public class SeaMapFromInput {
 		seaMap.setMap(newMap);
 	}
 	
-	private void printMap(ISpot[][] map) {
-		for (ISpot[] row : map) {
+	//Used For Debugging
+	@SuppressWarnings("unused")
+	private void printMap(ISpot[][] map, ISpot[][] original) {
+		
+		for (int rowIndex=0; rowIndex<map.length; rowIndex++) {
+			ISpot[] row = map[rowIndex];
 			for (ISpot spot : row) {
 				System.out.print(spot.displayValue());
+			}
+			System.out.print("   ");
+			for (int colIndex=0; colIndex<=original.length; colIndex++) {
+				System.out.print(original[rowIndex][colIndex].displayValue());
 			}
 			System.out.print("\n");
 		}
 	}
-
 }

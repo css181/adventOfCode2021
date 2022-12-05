@@ -150,4 +150,37 @@ public class PartOneTest {
 		assertEquals(expected, mapFromInput.getSeaMap().toString());
 	}
 	
+	@Test
+	void verify_map_after_58_moves() throws Exception {
+		String expected = "..>>v>vv..\n"
+				+ "..v.>>vv..\n"
+				+ "..>>v>>vv.\n"
+				+ "..>>>>>vv.\n"
+				+ "v......>vv\n"
+				+ "v>v....>>v\n"
+				+ "vvv.....>>\n"
+				+ ">vv......>\n"
+				+ ".>v.vv.v..\n";
+		URL fileName = getClass().getResource("SampleInput.txt");
+		mapFromInput.setFileToUse(new File(fileName.getPath()));
+		mapFromInput.populateSeaMap();
+		for(int x=0; x<58; x++)
+			mapFromInput.performMoveStep();
+		assertEquals(expected, mapFromInput.getSeaMap().toString());
+	}
+	
+	@Test
+	void verify_last_move_of_sample_is_after_58_moves() throws Exception {
+		URL fileName = getClass().getResource("SampleInput.txt");
+		mapFromInput.setFileToUse(new File(fileName.getPath()));
+		mapFromInput.populateSeaMap();
+		assertEquals(58, mapFromInput.getNumOfStepsUntilNoMovesArePossible());
+	}
+	
+	@Test
+	void part_One_Answer() throws Exception {
+		mapFromInput.populateSeaMap();
+//		System.out.println(mapFromInput.getNumOfStepsUntilNoMovesArePossible());
+		assertEquals(337, mapFromInput.getNumOfStepsUntilNoMovesArePossible());
+	}
 }
