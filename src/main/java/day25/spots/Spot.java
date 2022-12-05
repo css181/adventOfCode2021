@@ -9,11 +9,6 @@ public abstract class Spot implements ISpot {
 	Spot(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
-	
-	@Override
-	public boolean isEmpty() {
-		return true;
-	}
 
 	public Coordinate getCoordinate() {
 		return coordinate;
@@ -33,10 +28,7 @@ public abstract class Spot implements ISpot {
         Spot other = (Spot) obj;
         
         if(!this.coordinate.equals(other.coordinate)) { return false; }
-        //TODO: Figure out a better way to do this that's OpenClose
-        if(this instanceof EmptySpot && !(other instanceof EmptySpot)) { return false; }
-        if(this instanceof EastCucumber && !(other instanceof EastCucumber)) { return false; }
-        if(this instanceof SouthCucumber && !(other instanceof SouthCucumber)) { return false; }
+        if(!this.getClass().equals(other.getClass())) { return false; }
         
         return true;
     }

@@ -1,7 +1,6 @@
 package day25.spots;
 
 import day25.Coordinate;
-import day25.SeaMap;
 
 public class EastCucumber extends Cucumber{
 

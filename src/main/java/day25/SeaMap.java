@@ -22,14 +22,14 @@ public class SeaMap {
 		}
 	}
 
-	private ISpot convertCharToSpot(Character character, Coordinate current) {
+	private ISpot convertCharToSpot(Character character, Coordinate spotPosition) {
 		switch (character) {
 		case '.':
-			return new EmptySpot(current);
+			return new EmptySpot(spotPosition);
 		case 'v':
-			return new SouthCucumber(current);
+			return new SouthCucumber(spotPosition);
 		case '>':
-			return new EastCucumber(current);
+			return new EastCucumber(spotPosition);
 		default:
 			throw new RuntimeException("Invalid map character: " + character);
 		}
@@ -57,22 +57,4 @@ public class SeaMap {
 		}
 		return print;
     } 
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        }
-
-        if(!(obj instanceof SeaMap)) { return false; }
-        SeaMap other = (SeaMap) obj;
-
-        if(!this.map.equals(other.map)) { return false; }
-        
-        return true;
-    }
 }

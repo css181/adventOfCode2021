@@ -3,9 +3,8 @@ package day25.spots;
 import java.lang.reflect.InvocationTargetException;
 
 import day25.Coordinate;
-import day25.SeaMap;
 
-public abstract class Cucumber extends Spot implements ISpot, ICucumber {
+public abstract class Cucumber extends Spot implements ICucumber {
 
 	@Override
 	public boolean isEmpty() {
@@ -33,7 +32,6 @@ public abstract class Cucumber extends Spot implements ISpot, ICucumber {
 			map[newY][newX] = this.getClass().getDeclaredConstructor(Coordinate.class).newInstance(new Coordinate(newX, newY));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

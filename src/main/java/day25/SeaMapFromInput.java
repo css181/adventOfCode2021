@@ -41,10 +41,7 @@ public class SeaMapFromInput {
 			preStepMap = createNewCopyOfMap(seaMap.getMap());
 			performMoveStep();
 			numOfSteps++;
-			if(numOfSteps==58) {
-				System.out.println("break");
-			}
-		} while (!areMapsEqual(preStepMap, seaMap.getMap()) && numOfSteps < 10000);
+		} while (!areMapsEqual(preStepMap, seaMap.getMap()));
 		return numOfSteps;
 	}
 
@@ -53,9 +50,7 @@ public class SeaMapFromInput {
 		for(int row=0; row<one.length; row++) {
 			if(one[row].length != two[row].length) { return false; }
 			for(int col=0; col<one[row].length; col++) {
-				if(!one[row][col].equals(two[row][col])) { 
-					return false; 
-				}
+				if(!one[row][col].equals(two[row][col])) { return false; }
 			}
 		}
 		return true;
@@ -65,23 +60,6 @@ public class SeaMapFromInput {
 		ISpot[][] newMap = createNewCopyOfMap(seaMap.getMap());
 		attemptToMoveAllEastCucumbers(newMap);
 		attemptToMoveAllSouthCucumbers(newMap);
-	}
-
-	private ISpot[][] createNewCopyOfMap(ISpot[][] map) {
-		ISpot [][] newMap = new ISpot[map.length][map[0].length];
-		for(int row=0; row<map.length; row++) {
-			for(int col=0; col<map[row].length; col++) {
-				ISpot spot = null;
-				try {
-					spot = map[row][col].getClass().getDeclaredConstructor(Coordinate.class).newInstance(new Coordinate(col, row));
-				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-					e.printStackTrace();
-				}
-				newMap[row][col] = spot;
-			}
-		}
-		return newMap;
 	}
 
 	private void attemptToMoveAllEastCucumbers(ISpot[][] newMap) {
@@ -109,13 +87,30 @@ public class SeaMapFromInput {
 		}
 		seaMap.setMap(newMap);
 	}
+
+	private ISpot[][] createNewCopyOfMap(ISpot[][] map) {
+		ISpot [][] newMap = new ISpot[map.length][map[0].length];
+		for(int row=0; row<map.length; row++) {
+			for(int col=0; col<map[row].length; col++) {
+				ISpot spot = null;
+				try {
+					spot = map[row][col].getClass().getDeclaredConstructor(Coordinate.class).newInstance(new Coordinate(col, row));
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+				}
+				newMap[row][col] = spot;
+			}
+		}
+		return newMap;
+	}
 	
 	//Used For Debugging
 	@SuppressWarnings("unused")
-	private void printMap(ISpot[][] map, ISpot[][] original) {
+	private void printMaps(ISpot[][] newMap, ISpot[][] original) {
 		
-		for (int rowIndex=0; rowIndex<map.length; rowIndex++) {
-			ISpot[] row = map[rowIndex];
+		for (int rowIndex=0; rowIndex<newMap.length; rowIndex++) {
+			ISpot[] row = newMap[rowIndex];
 			for (ISpot spot : row) {
 				System.out.print(spot.displayValue());
 			}
