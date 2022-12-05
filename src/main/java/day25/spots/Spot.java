@@ -15,11 +15,6 @@ public abstract class Spot implements ISpot {
 		return true;
 	}
 
-	@Override
-	public String displayValue() {
-		return ".";
-	}
-
 	public Coordinate getCoordinate() {
 		return coordinate;
 	}

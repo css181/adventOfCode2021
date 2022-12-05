@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import day1.FileUtility;
 import day25.spots.EastCucumber;
+import day25.spots.ISpot;
+import day25.spots.SouthCucumber;
 
 
 public class PartOneTest {
@@ -86,22 +88,66 @@ public class PartOneTest {
 		mapFromInput.setFileToUse(new File(fileName.getPath()));
 		mapFromInput.populateSeaMap();
 		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,0).isEmpty());
-		assertEquals(true, mapFromInput.getSeaMap().getSpot(0,1).isEmpty());
-		assertEquals(true, mapFromInput.getSeaMap().getSpot(0,2).isEmpty());
-		assertEquals(true, mapFromInput.getSeaMap().getSpot(0,3).isEmpty());
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,4).isEmpty());
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,5).isEmpty());
-		assertEquals(true, mapFromInput.getSeaMap().getSpot(0,6).isEmpty());
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,7).isEmpty());
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,8).isEmpty());
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(0,9).isEmpty());
+		assertEquals(true, mapFromInput.getSeaMap().getSpot(1,0).isEmpty());
+		assertEquals(true, mapFromInput.getSeaMap().getSpot(2,0).isEmpty());
+		assertEquals(true, mapFromInput.getSeaMap().getSpot(3,0).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(4,0).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(5,0).isEmpty());
+		assertEquals(true, mapFromInput.getSeaMap().getSpot(6,0).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(7,0).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(8,0).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(9,0).isEmpty());
 		
-		assertEquals(false, mapFromInput.getSeaMap().getSpot(8,9).isEmpty());
+		assertEquals(false, mapFromInput.getSeaMap().getSpot(9,8).isEmpty());
 	}
 	
 	@Test
 	void each_cucumber_has_a_next_move_and_can_check_if_it_can_move() throws Exception {
-		EastCucumber cuc1 = new EastCucumber(new Coordinate(0, 0));
+		URL fileName = getClass().getResource("SampleInput.txt");
+		mapFromInput.setFileToUse(new File(fileName.getPath()));
+		mapFromInput.populateSeaMap();
+		ISpot[][] map = mapFromInput.getSeaMap().getMap();
 		
+		SouthCucumber southCanMove = new SouthCucumber(new Coordinate(0, 0));
+		assertEquals(true, southCanMove.isAbleToMove(map));
+		assertEquals(new Coordinate(0, 1), southCanMove.getMoveToCoordinate(map));
+		
+		SouthCucumber southCanNotMove = new SouthCucumber(new Coordinate(2, 4));
+		assertEquals(false, southCanNotMove.isAbleToMove(map));
+		assertEquals(new Coordinate(2, 5), southCanNotMove.getMoveToCoordinate(map));
+		
+		EastCucumber eastCanMove = new EastCucumber(new Coordinate(5, 0));
+		assertEquals(true, eastCanMove.isAbleToMove(map));
+		assertEquals(new Coordinate(6, 0), eastCanMove.getMoveToCoordinate(map));
+		
+		EastCucumber eastCanNotMove = new EastCucumber(new Coordinate(4, 0));
+		assertEquals(false, eastCanNotMove.isAbleToMove(map));
+		assertEquals(new Coordinate(5, 0), eastCanNotMove.getMoveToCoordinate(map));
+		
+		//On Boarder test
+		SouthCucumber south = new SouthCucumber(new Coordinate(4, 8));
+		assertEquals(new Coordinate(4, 0), south.getMoveToCoordinate(map));
+		
+		EastCucumber east = new EastCucumber(new Coordinate(9, 0));
+		assertEquals(new Coordinate(0, 0), east.getMoveToCoordinate(map));
 	}
+	
+	@Test
+	void verify_map_after_1_move() throws Exception {
+		String expected = "....>.>v.>\n"
+				+ "v.v>.>v.v.\n"
+				+ ">v>>..>v..\n"
+				+ ">>v>v>.>.v\n"
+				+ ".>v.v...v.\n"
+				+ "v>>.>vvv..\n"
+				+ "..v...>>..\n"
+				+ "vv...>>vv.\n"
+				+ ">.v.v..v.v\n";
+		URL fileName = getClass().getResource("SampleInput.txt");
+		mapFromInput.setFileToUse(new File(fileName.getPath()));
+		mapFromInput.populateSeaMap();
+		mapFromInput.performMoveStep();
+		assertEquals(expected, mapFromInput.getSeaMap().toString());
+	}
+	
 }

@@ -9,19 +9,15 @@ import day25.spots.ISpot;
 
 public class SeaMap {
 
-	private ArrayList<ArrayList<ISpot>> map;
-	public SeaMap() {
-		map = new ArrayList<ArrayList<ISpot>>();
-	}
+	private ISpot[][] map;
 	
 	public SeaMap(ArrayList<ArrayList<Character>> input) {
-		map = new ArrayList<ArrayList<ISpot>>();
+		map = new ISpot[input.size()][input.get(0).size()];
 		for (int row=0; row<input.size(); row++) {
     		ArrayList<Character> curRow = input.get(row);
-    		map.add(new ArrayList<ISpot>());
 			for (int col=0; col<curRow.size(); col++) {
-				ISpot spot = convertCharToSpot(input.get(row).get(col), new Coordinate(row, col));
-				map.get(row).add(spot);
+				ISpot spot = convertCharToSpot(input.get(row).get(col), new Coordinate(col, row));
+				map[row][col] = spot;
 			}
 		}
 	}
@@ -39,14 +35,21 @@ public class SeaMap {
 		}
 	}
 	
+	public ISpot[][] getMap() {
+		return map;
+	}
+	public void setMap(ISpot[][] map) {
+		this.map = map;
+	}
+
 	public ISpot getSpot(int x, int y) {
-		return map.get(x).get(y);
+		return map[y][x];
 	}
 
 	@Override
     public String toString() {
     	String print = "";
-    	for (ArrayList<ISpot> row : map) {
+    	for (ISpot[] row : map) {
 			for (ISpot spot : row) {
 				print+=spot.displayValue();
 			}
