@@ -35,4 +35,9 @@ public abstract class Instruction implements I_Instruction {
 			return Integer.valueOf(toDo.substring(toDo.lastIndexOf(" ")+1));
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName() + " ~ " + toDo;
+	}
 }

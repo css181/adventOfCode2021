@@ -260,11 +260,27 @@ public class Day24Part1Test {
 		assertEquals(1, GlobalVars.z);
 	}
 	
-	@Test
+	@Test //Get Part One Answer from final sysout()
 	void get_largest_MONAD_number_with_no_zeros_that_finishes_processing_with_z_equal_to_0() throws Exception {
 		day24.setupInstructionsFromInputFile();
-		GlobalVars.MONAD_input = new ArrayList<Integer>(Arrays.asList(9,9,9,9,9,9,9,9,9,9,9,9,9,9));
+		//Use the input to get patterns, we can start from a known max possible state and go down from there
+		GlobalVars.MONAD_input = new ArrayList<Integer>(Arrays.asList(9,9,9,9,9,7,9,5,9,2,9,4,5,6));
 		
 		day24.calculateLargestMONAD_resulting_in_z_equal_0();
+		//From input potential non-9s are indexes: 4,5,8,9,11,12,13
+		//hasNeg:             *, *,       *, *,    *, *, *
+		//Index:  0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13
+		//Offset: 1, 9,12, 6, 9,15, 7,12,15, 3, 6, 2,10,12
+		//Answer: 9, 9, 9, 9, 9, 7, 9, 5, 9, 1, 9, 4, 5, 6
+	}
+	
+	@Test //Get Part Two Answer from final sysout()
+	void get_lowest_MONAD_number_with_no_zeros_that_finishes_processing_with_z_equal_to_0() throws Exception {
+		day24.setupInstructionsFromInputFile();
+		//Use the input to get patterns, we can start from a known max possible state and go down from there
+		GlobalVars.MONAD_input = new ArrayList<Integer>(Arrays.asList(4,5,3,1,1,1,8,1,5,1,6,1,1,1));
+		
+		day24.calculateSmallestMONAD_resulting_in_z_equal_0();
+		//Answer: 4, 5, 3, 1, 1, 1, 9, 1, 5, 1, 6, 1, 1, 1
 	}
 }
